@@ -9,7 +9,7 @@ import json
 
 def get_model_response(customer_input, aws_access_key_id, aws_secret_access_key, boto_session):
     if not aws_access_key_id and not aws_secret_access_key:
-        st.info("Access Key Id or Secret Access Key are not provided yet!")
+        st.info("🔑 Access Key Id or Secret Access Key are not provided yet!")
         return None
 
     client = boto_session.client(
@@ -92,29 +92,30 @@ def get_azure_gpt_response(api_base, api_version, api_key, question):
 
 ## Initialize our Streamlit app
 st.set_page_config(
-    page_title="OUR-Research",
+    page_title="LLM Chatbot Models",
     page_icon="🤖",
     layout="centered"
 )
-st.title("💬 Research")
+st.title("💬 Research on LLM Models")
 st.caption("🚀 A dynamic conversational experience powered by various LLMs.")
 
 # Sidebar for model selection and API key input
-st.sidebar.header("Configuration")
-model_choice = st.sidebar.radio("Choose the model:", ["Gemini Pro", "GPT-4.0", "Azure OpenAI GPT-3.5 Turbo","AWS"])
+st.sidebar.header("🔧 Configuration")
+model_choice = st.sidebar.radio("🎛 Choose the model:", ["Gemini Pro", "GPT-4.0", "Azure OpenAI GPT-3.5 Turbo","AWS"])
 api_key = None
 
 if model_choice == "Gemini Pro":
-    api_key = st.sidebar.text_input("Gemini API Key", type="password")
+    api_key = st.sidebar.text_input("🔑 Gemini API Key", type="password")
 elif model_choice == "GPT-4.0":
-    api_key = st.sidebar.text_input(" Chat-GPT API Key", type="password")
+    api_key = st.sidebar.text_input("🔑 Chat-GPT API Key", type="password")
 elif model_choice == "AWS":
-    aws_access_key_id = st.sidebar.text_input("AWS Access Key Id", placeholder="access key", type="password")
-    api_key = st.sidebar.text_input("AWS Secret Access Key", placeholder="secret", type="password")   
+    aws_access_key_id = st.sidebar.text_input("🔑 AWS Access Key Id", placeholder="access key", type="password")
+    api_key = st.sidebar.text_input("🗝 AWS Secret Access Key", placeholder="secret", type="password")   
 else:
-    api_base = st.sidebar.text_input("Amazon API Base URL", placeholder="https://<name>.openai.azure.com/")
-    api_version = st.sidebar.text_input("API Version", "2023-03-15-preview")
-    api_key = st.sidebar.text_input("API Key", type="password")
+    api_base = st.sidebar.text_input("🌐 Azure API Base URL", placeholder="https://<name>.openai.azure.com/")
+    api_version = st.sidebar.text_input("📛 API Version", "2023-03-15-preview")
+    api_key = st.sidebar.text_input("🔑 API Key", type="password")
+
 
 # Initialize chat session in Streamlit if not already present
 if "chat_history" not in st.session_state:
@@ -166,10 +167,10 @@ if input_text:
             st.markdown(assistant_response)
 
         # Display metrics in the sidebar
-        st.sidebar.subheader("Evaluation Metrics")
+        st.sidebar.subheader("📊 Evaluation Metrics")
         st.sidebar.write(f"- **Throughput:** {throughput:.6f} tokens/second")
         st.sidebar.write(f"- **Latency:** {latency:.6f} seconds")
         st.sidebar.write(f"- **Input Tokens:** {input_tokens}")
         st.sidebar.write(f"- **Output Tokens:** {output_tokens}")
     else:
-        st.sidebar.error("Please enter your API key to proceed.")
+        st.sidebar.error("⚠️ Please enter your API key to proceed.")
